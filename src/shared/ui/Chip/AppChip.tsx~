@@ -1,0 +1,13 @@
+import { Chip} from '@mui/material'
+import type { ChipProps } from '@mui/material/Chip'
+
+export function AppChip(props: ChipProps) {
+  return (
+    <Chip
+      size="small"
+      variant="outlined"
+      sx={{ minWidth: 80 }}
+      {...props}
+    />
+  )
+}

@@ -1,0 +1,6 @@
+.wrapper {
+  padding: 32px 16px;
+  justify-items: center;
+  max-width: none;
+
+}

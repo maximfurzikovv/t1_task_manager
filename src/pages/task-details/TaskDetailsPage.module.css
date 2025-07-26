@@ -1,0 +1,90 @@
+.container {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 2rem; /* Уменьшил размер заголовка */
+  font-weight: 500;
+  margin-bottom: 16px; /* Уменьшил отступ */
+  color: #333;
+  text-align: center;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 500px; /* Уменьшил максимальную ширину */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Уменьшил промежутки между полями */
+  border: 2px solid #e0e0e0; /* Уменьшил толщину границы */
+  border-radius: 8px;
+  padding: 24px; /* Уменьшил внутренние отступы */
+  margin-top: 20px;
+  background: #fff;
+}
+
+.textField {
+  margin-bottom: 0 !important; /* Убрал лишний отступ */
+}
+
+.textField label {
+  font-size: 1rem !important; /* Уменьшил размер лейблов */
+  color: #555 !important;
+  background-color: white; /* Добавил фон для лейблов */
+  padding: 0 4px !important; /* Добавил отступы для лейблов */
+  transform: translate(14px, -6px) scale(0.75) !important; /* Подправил позиционирование */
+}
+
+.textField label.Mui-focused {
+  color: #5861b6 !important; /* Цвет при фокусе */
+}
+
+.textField .MuiOutlinedInput-root {
+  border-radius: 6px !important;
+}
+
+.textField .MuiOutlinedInput-notchedOutline {
+  border-color: #ddd !important; /* Светлее граница */
+}
+
+.textField .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #5861b6 !important; /* Цвет при фокусе */
+}
+
+.textField input,
+.textField textarea,
+.textField .MuiSelect-select {
+  font-size: 0.95rem !important; /* Уменьшил размер текста */
+  padding: 10px 14px !important; /* Уменьшил отступы */
+  height: 1.2em; /* Оптимизировал высоту */
+}
+
+.buttonGroup {
+  margin-top: 24px; /* Уменьшил отступ */
+  display: flex;
+  gap: 12px; /* Уменьшил промежуток между кнопками */
+  justify-content: center;
+}
+
+.saveButton {
+  background-color: #5861b6 !important;
+  color: white !important;
+  padding: 8px 20px !important; /* Уменьшил размер кнопок */
+  font-size: 0.9rem !important; /* Уменьшил текст кнопок */
+  border-radius: 4px !important;
+}
+
+.saveButton:hover {
+  background-color: #454d99 !important;
+}
+
+.cancelButton {
+  color: #5861b6 !important;
+  border-color: #5861b6 !important;
+  padding: 8px 20px !important; /* Уменьшил размер кнопок */
+  font-size: 0.9rem !important; /* Уменьшил текст кнопок */
+  border-radius: 4px !important;
+}
