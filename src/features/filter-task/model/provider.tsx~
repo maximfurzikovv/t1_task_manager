@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TaskFilterContext, TaskFilter} from "@features/filter-task/model/context.ts";
-
+import { TaskFilterContext} from "@features/filter-task/model/context.ts";
+import type { TaskFilter } from "@features/filter-task/model/context.ts";
 interface Props {
     children: React.ReactNode
 }

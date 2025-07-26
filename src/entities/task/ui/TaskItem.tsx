@@ -1,4 +1,4 @@
-import { Card, Chip, Typography, Button } from '@mui/material'
+import { Typography } from '@mui/material'
 import type { Task } from '../model/types'
 import { useNavigate } from 'react-router-dom'
 import styles from './TaskItem.module.css'

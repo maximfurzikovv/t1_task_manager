@@ -1,7 +1,7 @@
 import { TaskList } from '@entities/task/ui/TaskList'
 import { Container, Typography } from "@mui/material";
 import styles from "./TaskListPage.module.css";
-import {TaskFilter} from "@features/filter-task/ui/TaskFilter.tsx";
+import {TaskFilter} from "@features/filter-task/ui/TaskFilter";
 
 export function TaskListPage() {
   return (

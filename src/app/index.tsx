@@ -1,6 +1,6 @@
 import { AppRouter } from './router/AppRouter'
-import { TaskProvider } from '@entities/task/model/provider.tsx';
-import { TaskFilterProvider } from "@features/filter-task/model/provider.tsx";
+import { TaskProvider } from '@entities/task/model/provider';
+import { TaskFilterProvider } from "@features/filter-task/model/provider";
 
 export function App() {
   return (

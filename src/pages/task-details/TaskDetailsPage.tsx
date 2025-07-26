@@ -1,11 +1,10 @@
 import { Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 import styles from './TaskDetailsPage.module.css'
-import { mockTasks } from "@entities/task/model/mock.ts";
 import type { Task } from '@entities/task/model/types'
-import { EditTaskForm } from "@features/edit-task/ui/EditTaskForm.tsx";
+import { EditTaskForm } from "@features/edit-task/ui/EditTaskForm";
 import { useContext } from "react";
-import { TaskContext } from "@entities/task/model/context.ts";
+import { TaskContext } from "@entities/task/model/context";
 
 export function TaskDetailsPage() {
     const { id } = useParams()

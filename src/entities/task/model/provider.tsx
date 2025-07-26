@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Task } from "./types";
 import { TaskContext } from "./context";
-import { mockTasks } from "@entities/task/model/mock.ts";
+import { mockTasks } from "@entities/task/model/mock";
 
 interface Props {
     children: React.ReactNode
