@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+# Менеджер задач
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение для управления списком задач. Реализовано на React + Redux Toolkit + TypeScript с использованием архитектурного подхода Feature-Sliced Design (FSD).
 
-Currently, two official plugins are available:
+Vercel: t1-task-manager-git-redux-version-maxim-furzikovs-projects.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Используемые технологии и подходы
+- React;
+- Redux Toolkit;
+- TypeScript;
+- Material UI;
+- Vite;
+- CSS Modules;
+- Feature-Sliced Design (FSD);
+- React Router v6;
+- LocalStorage для хранения задач;
+- PostCSS + Autoprefixer.
 
-## Expanding the ESLint configuration
+### Краткое описание архитектуры
+В проекте используется Feature-Sliced Design (FSD) — архитектурный подход, при котором код структурируется по функциональным срезам, а не по типам.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Основные слои:
+- app/ — инициализация приложения: маршруты, Redux store, общие провайдеры.
+- pages/ — страницы.
+- features/ — законченные пользовательские функции (фильтрация задач, редактирование).
+- entities/ — бизнес-сущности.
+- shared/ — переиспользуемые UI-компоненты.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Такая архитектура облегчает масштабирование, переиспользование компонентов и отделение бизнес-логики от UI.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Реализованный функционал
+- Создание, редактирование, удаление задач
+- Фильтрация по статусу, категории и приоритету
+- Отображение даты создания
+- Сохранение задач в localStorage
+- Валидация полей при создании и редактировании
+- Адаптивная вёрстка
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Инструкция по запуску
+
+### Клонирование репозитория
+
+```bash
+git clone https://github.com/maximfurzikovv/t1_task_manager
+cd t1_task_manager
+```
+### Установка зависимостей
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Запуск проекта в режиме разработки
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
