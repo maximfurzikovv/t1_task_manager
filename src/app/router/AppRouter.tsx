@@ -1,0 +1,27 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { TaskListPage } from '@pages/task-list/index';
+import { TaskDetailsPage } from '@pages/task-details';
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <TaskListPage />
+    },
+    {
+        path: "/task/:id",
+        element: <TaskDetailsPage />
+    },
+    {
+        path: "/task/new",
+        element: <TaskDetailsPage isNew />
+    }
+    ],
+    // {
+    //     basename: '/t1_task_manager'
+    // }
+
+);
+
+export function AppRouter() {
+    return <RouterProvider router={router} />;
+};

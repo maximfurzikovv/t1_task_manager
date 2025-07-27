@@ -1,0 +1,15 @@
+import { createContext } from "react";
+import type { TaskCategory, TaskPriority, TaskStatus } from "@entities/task/model/types.ts";
+
+export interface TaskFilter {
+    status: TaskStatus | 'all'
+    category: TaskCategory | 'all'
+    priority: TaskPriority | 'all'
+}
+
+export interface TaskFilterContextType {
+    filter: TaskFilter
+    setFilter: (filter: TaskFilter) => void
+}
+
+export const TaskFilterContext = createContext<TaskFilterContextType | null>(null)

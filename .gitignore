@@ -1,0 +1,22 @@
+# node & build
+node_modules
+dist
+
+# IDE
+.idea/
+.vscode/
+
+# временные файлы редакторов
+*.ts~
+*.tsx~
+*.js~
+*.css~
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# env
+.env
+.env.local
