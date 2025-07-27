@@ -32,9 +32,15 @@ export function TaskFilter() {
     }
 
     return (
-        <Stack direction="row" spacing={2} sx={{ mb: 3 }} flexWrap="wrap">
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+          sx={{ mb: 3 }}
+          flexWrap="wrap"
+        >
+
       <TextField
-        label="Статус"
+        label="Статуc"
         value={filter.status}
         onChange={handleChange('status')}
         select
@@ -75,6 +81,7 @@ export function TaskFilter() {
       <AppButton
           onClick={handleReset}
           variant="contained"
+          sx={{ width: 90, fontSize: 12 }}
       >
           Сбросить
       </AppButton>
