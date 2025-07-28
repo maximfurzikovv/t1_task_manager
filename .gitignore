@@ -12,6 +12,8 @@ dist
 *.js~
 *.css~
 *.log
+*~
+
 
 # OS
 .DS_Store

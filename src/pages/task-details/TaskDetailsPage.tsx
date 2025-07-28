@@ -3,12 +3,20 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styles from './TaskDetailsPage.module.css'
 import type { Task } from '@entities/task/model/types'
 import { EditTaskForm } from "@features/edit-task/ui/EditTaskForm";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "@app/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@app/store";
 import { createTask, updateTask } from "@entities/task/model/taskSlice";
 import { v4 as uuidv4 } from 'uuid'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { useEffect, useState } from 'react'
+import { taskApi } from '@shared/api/taskApi'
 
+/**
+ * Страница создания или редактирования задачи.
+ * Если isNew=true - создаётся новая задача, иначе загружается задача по ID из URL.
+ */
 interface Props {
+    /** Флаг, указывающий, создаётся ли новая задача */
     isNew?: boolean
 }
 
@@ -17,10 +25,29 @@ export function TaskDetailsPage({ isNew = false }: Props) {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
 
-    const taskFromStore = useSelector((state: RootState) =>
-        state.task.tasks.find((t) => t.id === id)
-    )
+    const [taskData, setTaskData] = useState<Task | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
 
+    /**
+     * При редактировании задачи - загружает задачу с сервера по ID.
+     * Вызывает API GET /tasks/:id
+     */
+    useEffect(() => {
+      if (!isNew && id) {
+        setLoading(true)
+        taskApi.getById(id)
+          .then(data => setTaskData(data))
+          .catch(() => setError('Задача не найдена'))
+          .finally(() => setLoading(false))
+      }
+    }, [id, isNew])
+
+    /**
+     * Исходное состояние задачи:
+     * - при создании - пустой шаблон с uuid и текущей датой
+     * - при редактировании - полученная с сервера задача
+     */
     const initialTask: Task = isNew
     ? {
         id: uuidv4(),
@@ -31,24 +58,41 @@ export function TaskDetailsPage({ isNew = false }: Props) {
         priority: 'Low',
         createdAt: new Date().toISOString(),
       }
-    : taskFromStore!
+    : taskData!
 
     const handleBack = () => navigate('/')
 
-    const handleSave = (task: Task) => {
-        if (isNew) {
-            dispatch(createTask(task))
-        } else {
-            dispatch(updateTask(task))
-        }
+    /**
+     * Обработчик сохранения задачи.
+     * В зависимости от режима вызывает:
+     * - POST /tasks - для создания
+     * - PATCH /tasks/:id - для обновления
+     * После успешного ответа переходит на главную.
+     */
+    const handleSave = async (task: Task) => {
+      try {
+        const resultAction = isNew
+          ? await dispatch(createTask(task))
+          : await dispatch(updateTask(task))
+
+        unwrapResult(resultAction)
         navigate('/')
+      } catch (err) {
+        alert('Ошибка при сохранении задачи')
+      }
     }
 
 
-    if (!isNew && !taskFromStore) {
-        return (
-            <Typography variant="h6" color="error">Задача не найдена</Typography>
-        )
+    if (!isNew && loading) {
+      return <Typography>Загрузка...</Typography>
+    }
+
+    if (!isNew && error) {
+      return <Typography color="error">{error}</Typography>
+    }
+
+    if (!isNew && !taskData) {
+      return null
     }
 
     return (

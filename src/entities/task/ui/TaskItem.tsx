@@ -22,9 +22,13 @@ export function TaskItem({ task }: Props) {
         navigate(`/task/${task.id}`)
     }
 
-    const handleDelete = (e: React.MouseEvent) => {
+    const handleDelete = async (e: React.MouseEvent) => {
         e.stopPropagation()
-        dispatch(deleteTask(task.id))
+        try {
+            await dispatch(deleteTask(task.id)).unwrap()
+        } catch (err) {
+            alert('Ошибка при удалении задачи')
+        }
     }
 
     const formatDate = (iso: string): string =>

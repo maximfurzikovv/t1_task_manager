@@ -1,93 +1,73 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { Task } from "./types"
 import { mockTasks } from "./mock"
+import { taskApi } from "@shared/api/taskApi"
 
 /**
  * Состояние задач в Redux store.
  */
 interface TaskState {
   tasks: Task[]
+  loading: boolean
+  error: string | null
 }
 
 /**
- * Начальное состояние задач (по умолчанию — моки).
+ * Начальное состояние задач.
  */
 const initialState: TaskState = {
-  tasks: mockTasks,
+  tasks: [],
+  loading: false,
+  error: null
 }
 
 /**
- * Загружает задачи из localStorage.
- * @returns Массив задач из localStorage или mockTasks по умолчанию.
+ * Асинхронное действие для загрузки, создания, обновления и удаления задач.
+ * GET /tasks
+ * POST /tasks
+ * PATCH /tasks/:id
+ * DELETE /tasks/:id
  */
-const loadTasks = (): Task[] => {
-  try {
-    const stored = localStorage.getItem("tasks")
-    return stored ? JSON.parse(stored) : mockTasks
-  } catch {
-    return mockTasks
-  }
-}
-
-/**
- * Сохраняет задачи в localStorage.
- * @param tasks Список задач для сохранения.
- */
-const saveTasks = (tasks: Task[]) => {
-  try {
-    localStorage.setItem("tasks", JSON.stringify(tasks))
-  } catch {
-    console.warn("Не удалось сохранить задачи в localStorage")
-  }
-}
+export const fetchTasks = createAsyncThunk('task/fetchAll', taskApi.getAll)
+export const createTask = createAsyncThunk('task/create', taskApi.create)
+export const updateTask = createAsyncThunk('task/update', taskApi.update)
+export const deleteTask = createAsyncThunk('task/delete', taskApi.remove)
 
 /**
  * Redux slice для управления задачами (task).
+ * Использует createAsyncThunk для обработки асинхронных запросов.
  */
 const taskSlice = createSlice({
   name: "task",
-  initialState: {
-    tasks: loadTasks(), // начальная загрузка из localStorage
-  },
-  reducers: {
-    /**
-     * Создаёт новую задачу.
-     * @param state Текущее состояние
-     * @param action Задача для добавления
-     */
-    createTask(state, action: PayloadAction<Task>) {
-      state.tasks.push(action.payload)
-      saveTasks(state.tasks)
-    },
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+        .addCase(fetchTasks.pending, (state) => {
+          state.loading = true
+          state.error = null
+        })
+        .addCase(fetchTasks.fulfilled, (state, action) => {
+            state.loading = false
+            state.tasks = action.payload
+        })
+        .addCase(fetchTasks.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message || "Ошибка при загрузке"
+        })
 
-    /**
-     * Обновляет существующую задачу по ID.
-     * @param state Текущее состояние
-     * @param action Обновлённая задача
-     */
-    updateTask(state, action: PayloadAction<Task>) {
-      const index = state.tasks.findIndex(
-        (task) => task.id === action.payload.id
-      )
-      if (index !== -1) {
-        state.tasks[index] = action.payload
-        saveTasks(state.tasks)
-      }
-    },
+        .addCase(createTask.fulfilled, (state, action) => {
+            state.tasks.push(action.payload)
+        })
+        .addCase(updateTask.fulfilled, (state, action) => {
+            const idx = state.tasks.findIndex(t => t.id === action.payload.id)
+            if (idx !== -1) state.tasks[idx] = action.payload
+        })
+        .addCase(deleteTask.fulfilled, (state, action) => {
+          state.tasks = state.tasks.filter(t => t.id !== action.meta.arg)
+        })
+  }
 
-    /**
-     * Удаляет задачу по ID.
-     * @param state Текущее состояние
-     * @param action ID задачи, которую нужно удалить
-     */
-    deleteTask(state, action: PayloadAction<string>) {
-      state.tasks = state.tasks.filter(
-        (task) => task.id !== action.payload
-      )
-      saveTasks(state.tasks)
-    },
-  },
 })
 
-export const { createTask, updateTask, deleteTask } = taskSlice.actions
 export default taskSlice.reducer
