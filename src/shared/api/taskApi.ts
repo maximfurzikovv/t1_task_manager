@@ -1,6 +1,6 @@
 import { Task } from '@entities/task/model/types';
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = '';
 
 /**
  * API для работы с задачами через REST API.
