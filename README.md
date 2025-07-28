@@ -1,69 +1,41 @@
-# React + TypeScript + Vite
+# Менеджер задач
+В рамках учебного задания реализовано полноценное CRUD-приложение с REST API: менеджер задач с клиент-серверной архитектурой на базе React + Redux + Express (Node.js).  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Vercel: https://t1-task-manager-git-server-version-maxim-furzikovs-projects.vercel.app/
+### Versel (сервер): https://t1-task-manager-git-server-version-maxim-furzikovs-projects.vercel.app/tasks
 
-Currently, two official plugins are available:
+## Стек технологий:
+- Node.js + Express;
+- Ранее разработанное SPA-приложение (ветка redux-version): https://github.com/maximfurzikovv/t1_task_manager/tree/redux-version
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Реализованный функционал
+- REST API на Express с TypeScript;
+- Методы получения всех задач, поиск задач по названию и дате (на уровне API);
+- Создание, редактирование и удаление задач;
+- Валидация формы задач;
+- Данные хранятся в оперативной памяти;
 
-## Expanding the ESLint configuration
+## Краткое описание архитектуры
+Проект реализован по принципу клиент–серверной архитектуры, где:
+- Клиентская часть - это одностраничное приложение (SPA) на React + Redux, взаимодействующее с сервером через REST API.
+- Серверная часть - Express-приложение на Node.js и TypeScript, обрабатывающее CRUD-запросы к задачам.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Инструкция по запуску проекта
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Установка зависимостей
+```bash
+git clone https://github.com/maximfurzikovv/t1_task_manager/tree/server-version
+npm install
+cd server
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Запуск сервера
+```bash
+npm run dev # В директории server
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Запуск SPA-приложения
+```bash
+npm run dev # В корневой директории проекта
 ```
