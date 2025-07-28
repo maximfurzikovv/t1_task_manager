@@ -27,3 +27,5 @@ if (process.env.VERCEL !== '1') {
     console.log(`Server running at http://localhost:${PORT}`)
   })
 }
+
+export default app
